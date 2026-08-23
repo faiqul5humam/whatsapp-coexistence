@@ -24,7 +24,7 @@
 
     button {
       background: #1877f2;
-      color: white;
+      color: #fff;
       border: 0;
       border-radius: 6px;
       padding: 12px 18px;
@@ -60,14 +60,6 @@
       border-radius: 8px;
       margin: 16px 0;
     }
-
-    .success {
-      background: #f0fff4;
-      border: 1px solid #52c41a;
-      padding: 12px;
-      border-radius: 8px;
-      margin: 16px 0;
-    }
   </style>
 </head>
 
@@ -94,9 +86,9 @@
 
     <div class="warning">
       <strong>Penting:</strong>
-      halaman ini hanya menjalankan Embedded Signup.
-      Jangan melakukan migrasi nomor sebelum layar Meta
-      menunjukkan alur WhatsApp Business App / Coexistence.
+      halaman ini hanya membuka Embedded Signup.
+      Jangan memasukkan atau memigrasikan nomor WhatsApp sebelum memastikan
+      layar Meta menunjukkan alur WhatsApp Business App / Coexistence yang benar.
     </div>
 
     <button id="connectBtn" disabled>
@@ -109,23 +101,26 @@
 
     <h3>Respons Meta</h3>
 
-    <pre id="metaOutput">Belum ada respons.</pre>
+    <pre id="metaOutput">Belum ada respons dari Meta.</pre>
 
     <h3>Respons Backend</h3>
 
-    <pre id="backendOutput">Belum ada respons.</pre>
+    <pre id="backendOutput">Belum ada respons dari backend.</pre>
 
   </div>
 
   <div id="fb-root"></div>
 
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
   <script>
 
-    /*
-     * =====================================================
-     * KONFIGURASI
-     * =====================================================
-     */
+    /* =====================================================
+       CONFIGURATION
+       ===================================================== */
 
     const APP_ID = "1089590593724613";
 
@@ -134,57 +129,37 @@
     const BACKEND_URL =
       "https://whatsapp-coexistence-backend.vercel.app/api/exchange";
 
-
-    /*
-     * =====================================================
-     * ELEMENT
-     * =====================================================
-     */
-
-    const connectBtn =
-      document.getElementById("connectBtn");
-
-    const statusElement =
-      document.getElementById("status");
-
-    const metaOutput =
-      document.getElementById("metaOutput");
-
-    const backendOutput =
-      document.getElementById("backendOutput");
+    const REDIRECT_URI =
+      "https://faiqul5humam.github.io/whatsapp-coexistence/";
 
 
-    /*
-     * =====================================================
-     * STATUS
-     * =====================================================
-     */
+    /* =====================================================
+       STATUS
+       ===================================================== */
 
-    function setStatus(message) {
+    function status(text) {
 
-      statusElement.textContent = message;
+      document.getElementById("status").textContent = text;
 
     }
 
 
-    /*
-     * =====================================================
-     * OUTPUT META
-     * =====================================================
-     */
+    /* =====================================================
+       META OUTPUT
+       ===================================================== */
 
-    function showMeta(data) {
+    function metaOutput(data) {
 
       try {
 
-        metaOutput.textContent =
+        document.getElementById("metaOutput").textContent =
           typeof data === "string"
             ? data
             : JSON.stringify(data, null, 2);
 
       } catch (error) {
 
-        metaOutput.textContent =
+        document.getElementById("metaOutput").textContent =
           String(data);
 
       }
@@ -192,24 +167,22 @@
     }
 
 
-    /*
-     * =====================================================
-     * OUTPUT BACKEND
-     * =====================================================
-     */
+    /* =====================================================
+       BACKEND OUTPUT
+       ===================================================== */
 
-    function showBackend(data) {
+    function backendOutput(data) {
 
       try {
 
-        backendOutput.textContent =
+        document.getElementById("backendOutput").textContent =
           typeof data === "string"
             ? data
             : JSON.stringify(data, null, 2);
 
       } catch (error) {
 
-        backendOutput.textContent =
+        document.getElementById("backendOutput").textContent =
           String(data);
 
       }
@@ -217,11 +190,9 @@
     }
 
 
-    /*
-     * =====================================================
-     * FACEBOOK SDK
-     * =====================================================
-     */
+    /* =====================================================
+       FACEBOOK SDK INITIALIZATION
+       ===================================================== */
 
     window.fbAsyncInit = function () {
 
@@ -238,31 +209,48 @@
       });
 
 
-      connectBtn.disabled = false;
+      document.getElementById("connectBtn").disabled = false;
 
 
-      setStatus(
+      status(
         "Facebook SDK siap. Klik Connect WhatsApp."
+      );
+
+
+      console.log(
+        "Facebook SDK initialized."
+      );
+
+      console.log(
+        "APP_ID:",
+        APP_ID
+      );
+
+      console.log(
+        "CONFIG_ID:",
+        CONFIG_ID
+      );
+
+      console.log(
+        "REDIRECT_URI:",
+        REDIRECT_URI
       );
 
     };
 
 
-    /*
-     * =====================================================
-     * META POSTMESSAGE
-     *
-     * Digunakan untuk menerima event Embedded Signup.
-     * =====================================================
-     */
+    /* =====================================================
+       FACEBOOK MESSAGE EVENT
+       ===================================================== */
 
     window.addEventListener(
       "message",
       function (event) {
 
         if (
-          event.origin !==
-          "https://www.facebook.com"
+          !event.origin.endsWith(
+            "facebook.com"
+          )
         ) {
 
           return;
@@ -273,7 +261,9 @@
         let data = event.data;
 
 
-        if (typeof data === "string") {
+        if (
+          typeof data === "string"
+        ) {
 
           try {
 
@@ -281,314 +271,287 @@
 
           } catch (error) {
 
-            // bukan JSON
+            // Biarkan sebagai string
+
           }
 
         }
 
 
         console.log(
-          "Meta postMessage:",
+          "Facebook message:",
           data
         );
 
 
-        showMeta(data);
-
-
-        /*
-         * =================================================
-         * CEK FINISH COEXISTENCE
-         * =================================================
-         */
-
-        if (
-          data &&
-          data.type ===
-          "WA_EMBEDDED_SIGNUP"
-        ) {
-
-          if (
-            data.event ===
-            "FINISH_WHATSAPP_BUSINESS_APP_ONBOARDING"
-          ) {
-
-            setStatus(
-              "Coexistence onboarding selesai. WABA ID diterima."
-            );
-
-          }
-
-        }
+        metaOutput(data);
 
       }
     );
 
 
-    /*
-     * =====================================================
-     * CONNECT WHATSAPP
-     * =====================================================
-     */
+    /* =====================================================
+       CONNECT WHATSAPP
+       ===================================================== */
 
-    connectBtn.addEventListener(
-      "click",
-      function () {
-
-        /*
-         * Jangan gunakan async di callback FB.login.
-         *
-         * FB.login harus dipanggil langsung dari
-         * click handler agar browser tidak memblokir popup.
-         */
-
-        setStatus(
-          "Membuka Embedded Signup..."
-        );
+    document
+      .getElementById("connectBtn")
+      .addEventListener(
+        "click",
+        function () {
 
 
-        showMeta(
-          "Menunggu respons dari Meta..."
-        );
+          status(
+            "Membuka Embedded Signup..."
+          );
 
 
-        showBackend(
-          "Belum ada request ke backend."
-        );
+          metaOutput(
+            "Menunggu respons dari Meta..."
+          );
 
 
-        /*
-         * =================================================
-         * EMBEDDED SIGNUP
-         * =================================================
-         */
-
-        FB.login(
-
-          function (response) {
-
-            console.log(
-              "Meta login response:",
-              response
-            );
+          backendOutput(
+            "Belum ada request ke backend."
+          );
 
 
-            showMeta(response);
+          console.log(
+            "Starting WhatsApp Embedded Signup..."
+          );
 
 
-            /*
-             * =============================================
-             * TIDAK ADA AUTH RESPONSE
-             * =============================================
-             */
+          console.log(
+            "Redirect URI:",
+            REDIRECT_URI
+          );
 
-            if (
-              !response ||
-              !response.authResponse
-            ) {
 
-              setStatus(
-                "Embedded Signup dibatalkan atau tidak memberikan authorization code."
+          /*
+           * PENTING:
+           *
+           * callback FB.login menggunakan
+           * function biasa, BUKAN async function.
+           */
+
+          FB.login(
+            function (response) {
+
+
+              /* =========================================
+                 META RESPONSE
+                 ========================================= */
+
+              console.log(
+                "Meta login response:",
+                response
               );
 
-              return;
 
-            }
-
-
-            /*
-             * =============================================
-             * AUTHORIZATION CODE
-             * =============================================
-             */
-
-            const code =
-              response.authResponse.code;
-
-
-            if (!code) {
-
-              setStatus(
-                "Meta mengembalikan authResponse tetapi tidak ada authorization code."
+              metaOutput(
+                response
               );
 
-              return;
 
-            }
+              /* =========================================
+                 CHECK RESPONSE
+                 ========================================= */
 
+              if (
+                !response ||
+                !response.authResponse
+              ) {
 
-            console.log(
-              "Authorization code diterima."
-            );
+                status(
+                  "Embedded Signup dibatalkan atau tidak memberikan authorization code."
+                );
 
-
-            setStatus(
-              "Authorization code diterima. Mengirim ke backend..."
-            );
-
-
-            /*
-             * =============================================
-             * KIRIM CODE KE BACKEND
-             * =============================================
-             */
-
-            fetch(
-              BACKEND_URL,
-              {
-
-                method: "POST",
-
-                headers: {
-
-                  "Content-Type":
-                    "application/json"
-
-                },
-
-                body: JSON.stringify({
-
-                  code: code
-
-                })
+                return;
 
               }
 
-            )
 
-            .then(
-              async function (backendResponse) {
+              /* =========================================
+                 GET AUTHORIZATION CODE
+                 ========================================= */
 
-                const text =
-                  await backendResponse.text();
+              const code =
+                response.authResponse.code;
 
 
-                let backendData;
+              if (!code) {
 
+                status(
+                  "Meta mengembalikan authResponse tetapi tidak ada authorization code."
+                );
+
+                return;
+
+              }
+
+
+              console.log(
+                "Authorization code diterima."
+              );
+
+
+              status(
+                "Authorization code diterima. Mengirim ke backend..."
+              );
+
+
+              /* =========================================
+                 SEND CODE TO BACKEND
+                 ========================================= */
+
+              (async function () {
 
                 try {
 
-                  backendData =
-                    JSON.parse(text);
+
+                  const backendResponse =
+                    await fetch(
+                      BACKEND_URL,
+                      {
+
+                        method: "POST",
+
+                        headers: {
+
+                          "Content-Type":
+                            "application/json"
+
+                        },
+
+                        body:
+                          JSON.stringify(
+                            {
+                              code: code
+                            }
+                          )
+
+                      }
+                    );
+
+
+                  /* =====================================
+                     READ BACKEND RESPONSE
+                     ===================================== */
+
+                  const backendData =
+                    await backendResponse.json();
+
+
+                  console.log(
+                    "Backend response:",
+                    backendData
+                  );
+
+
+                  backendOutput(
+                    backendData
+                  );
+
+
+                  /* =====================================
+                     CHECK BACKEND RESULT
+                     ===================================== */
+
+                  if (
+                    backendResponse.ok &&
+                    backendData.success
+                  ) {
+
+                    status(
+                      "BERHASIL: Authorization code berhasil ditukar oleh backend."
+                    );
+
+                  } else {
+
+                    status(
+                      "Backend menerima request tetapi Meta mengembalikan error."
+                    );
+
+                  }
+
 
                 } catch (error) {
 
-                  backendData = {
+
+                  console.error(
+                    "Backend error:",
+                    error
+                  );
+
+
+                  status(
+                    "Gagal menghubungi backend."
+                  );
+
+
+                  backendOutput({
 
                     success: false,
 
                     error:
-                      "Backend mengembalikan response bukan JSON.",
+                      error.message
 
-                    raw: text
+                  });
 
-                  };
 
                 }
 
-
-                console.log(
-                  "Backend response:",
-                  backendData
-                );
+              })();
 
 
-                showBackend(
-                  backendData
-                );
+            },
 
 
-                /*
-                 * =========================================
-                 * SUCCESS
-                 * =========================================
-                 */
+            /* =================================================
+               FACEBOOK LOGIN OPTIONS
+               ================================================= */
 
-                if (
-                  backendResponse.ok &&
-                  backendData.success
-                ) {
+            {
 
-                  setStatus(
-                    "BERHASIL: Authorization code berhasil ditukar oleh backend."
-                  );
+              config_id:
+                CONFIG_ID,
 
-                }
 
-                else {
+              response_type:
+                "code",
 
-                  setStatus(
-                    "Backend menerima request tetapi Meta mengembalikan error."
-                  );
 
-                }
+              override_default_response_type:
+                true,
+
+
+              /*
+               * HARUS SAMA PERSIS
+               * dengan Meta dan Vercel.
+               */
+
+              redirect_uri:
+                REDIRECT_URI,
+
+
+              extras: {
+
+                setup: {},
+
+                featureType:
+                  "whatsapp_business_app_onboarding",
+
+                sessionInfoVersion:
+                  3
 
               }
-            )
-
-            .catch(
-              function (error) {
-
-                console.error(
-                  "Backend error:",
-                  error
-                );
-
-
-                setStatus(
-                  "Gagal menghubungi backend."
-                );
-
-
-                showBackend({
-
-                  success: false,
-
-                  error:
-                    error.message
-
-                });
-
-              }
-            );
-
-          },
-
-          /*
-           * =================================================
-           * OPTIONS EMBEDDED SIGNUP
-           * =================================================
-           */
-
-          {
-
-            config_id:
-              CONFIG_ID,
-
-            response_type:
-              "code",
-
-            override_default_response_type:
-              true,
-
-            extras: {
-
-              setup: {},
-
-              featureType:
-                "whatsapp_business_app_onboarding",
-
-              sessionInfoVersion:
-                "3"
 
             }
 
-          }
+          );
 
-        );
-
-      }
-    );
+        }
+      );
 
   </script>
 

@@ -2,7 +2,6 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -11,240 +10,144 @@
   <title>WhatsApp Coexistence Test</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f7fa;
-      color: #111827;
-    }
-
-    .container {
-      max-width: 900px;
+      font-family: Arial, sans-serif;
+      max-width: 820px;
       margin: 40px auto;
       padding: 0 20px;
-    }
-
-    h1 {
-      margin-bottom: 25px;
+      line-height: 1.5;
     }
 
     .card {
-      background: #fff;
-      border-radius: 10px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
       padding: 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    }
-
-    .info {
-      margin-bottom: 10px;
-    }
-
-    .label {
-      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
     }
 
     button {
       background: #1877f2;
-      color: #fff;
-      border: none;
+      color: white;
+      border: 0;
       border-radius: 6px;
       padding: 12px 18px;
       font-size: 15px;
-      font-weight: bold;
       cursor: pointer;
     }
 
-    button:hover {
-      background: #166fe5;
-    }
-
     button:disabled {
-      background: #9ca3af;
+      opacity: .5;
       cursor: not-allowed;
     }
 
-    .status {
-      background: #111;
-      color: #fff;
-      border-radius: 6px;
-      padding: 14px;
-      min-height: 45px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      font-family: Consolas, monospace;
-      font-size: 13px;
-    }
-
-    .warning {
-      background: #fff7ed;
-      border: 1px solid #fdba74;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-
-    .debug {
-      background: #eff6ff;
-      border: 1px solid #93c5fd;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      line-height: 1.5;
+    code {
+      background: #f4f4f4;
+      padding: 2px 5px;
+      border-radius: 4px;
+      word-break: break-all;
     }
 
     pre {
       background: #111;
-      color: #fff;
-      border-radius: 6px;
-      padding: 15px;
-      overflow-x: auto;
+      color: #eee;
+      padding: 14px;
+      border-radius: 8px;
+      overflow: auto;
       white-space: pre-wrap;
       word-break: break-word;
-      font-family: Consolas, monospace;
-      font-size: 12px;
+    }
+
+    .warning {
+      background: #fff7e6;
+      border: 1px solid #ffd591;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .info {
+      background: #eef6ff;
+      border: 1px solid #91caff;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 16px 0;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="card">
 
-  <div class="card">
+  <h1>WhatsApp Coexistence Test</h1>
 
-    <h1>WhatsApp Coexistence Test</h1>
+  <p>
+    <strong>App:</strong>
+    Indosat Corporate Collection
+  </p>
 
-    <div class="info">
-      <span class="label">App:</span>
-      Indosat Corporate Collection
-    </div>
+  <p>
+    <strong>App ID:</strong>
+    <code>1089590593724613</code>
+  </p>
 
-    <div class="info">
-      <span class="label">App ID:</span>
-      <code>1089590593724613</code>
-    </div>
+  <p>
+    <strong>Configuration ID:</strong>
+    <code>866712459710524</code>
+  </p>
 
-    <div class="info">
-      <span class="label">Configuration ID:</span>
-      <code>866712459710524</code>
-    </div>
-
+  <div class="warning">
+    <strong>Penting:</strong>
+    Halaman ini hanya melakukan pengujian
+    Embedded Signup / WhatsApp Coexistence.
+    Jangan melakukan migrasi nomor sebelum
+    hasil onboarding benar-benar menunjukkan
+    kondisi Coexistence yang benar.
   </div>
 
-
-  <div class="card">
-
-    <div class="warning">
-      <strong>Penting:</strong>
-
-      Halaman ini menjalankan
-      <strong>WhatsApp Business App Onboarding / Coexistence</strong>.
-
-      Nomor WhatsApp Business yang sudah aktif di HP
-      tidak perlu dihapus atau dimigrasikan secara manual.
-    </div>
-
-    <div class="debug">
-
-      <strong>Mode:</strong>
-
-      Embedded Signup dengan
-      <code>whatsapp_business_app_onboarding</code>.
-
-      Sistem juga akan menangkap
-      <code>redirect_uri</code>
-      yang benar-benar digunakan oleh Meta.
-    </div>
-
-    <button
-      id="connectBtn"
-      type="button"
-      onclick="connectWhatsApp()"
-    >
-      Connect WhatsApp
-    </button>
-
+  <div class="info">
+    <strong>Debug mode:</strong>
+    Sistem TIDAK lagi mencoba menangkap
+    <code>redirect_uri</code> dari
+    <code>window.open()</code>.
+    Nilai internal seperti
+    <code>staticxx.facebook.com</code>
+    tidak akan digunakan.
   </div>
 
+  <button id="connectBtn" disabled>
+    Connect WhatsApp
+  </button>
 
-  <div class="card">
+  <h3>Status</h3>
+  <pre id="status">
+Memuat Facebook SDK...
+  </pre>
 
-    <h3>Status</h3>
+  <h3>Authorization Data</h3>
+  <pre id="authOutput">
+Belum ada respons.
+  </pre>
 
-    <div
-      id="status"
-      class="status"
-    >
-      Siap. Klik Connect WhatsApp.
-    </div>
+  <h3>Respons Meta</h3>
+  <pre id="metaOutput">
+Belum ada respons.
+  </pre>
 
-  </div>
-
-
-  <div class="card">
-
-    <h3>Redirect URI yang Ditangkap</h3>
-
-    <pre id="redirectUri">Belum ada.</pre>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Respons Meta</h3>
-
-    <pre id="metaResponse">Belum ada respons.</pre>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Respons Backend</h3>
-
-    <pre id="backendResponse">
-Belum ada request ke backend.
-    </pre>
-
-  </div>
-
-
-  <div class="card">
-
-    <h3>Coexistence Result</h3>
-
-    <pre id="coexistenceResult">
-Belum ada hasil.
-    </pre>
-
-  </div>
+  <h3>Respons Backend</h3>
+  <pre id="backendOutput">
+Belum ada respons.
+  </pre>
 
 </div>
 
-
-<script
-  async
-  defer
-  crossorigin="anonymous"
-  src="https://connect.facebook.net/en_US/sdk.js">
-</script>
-
+<div id="fb-root"></div>
 
 <script>
 
-  /*
-   * ============================================================
-   * CONFIGURATION
-   * ============================================================
-   */
+  /* =========================================================
+     CONFIG
+     ========================================================= */
 
   const APP_ID =
     "1089590593724613";
@@ -256,526 +159,192 @@ Belum ada hasil.
     "https://whatsapp-coexistence-backend.vercel.app/api/exchange";
 
 
-  /*
-   * ============================================================
-   * STATE
-   * ============================================================
-   */
-
-  let facebookInitialized = false;
-
-  let loginInProgress = false;
-
-  let capturedRedirectUri = null;
-
-  let authorizationCode = null;
-
-
-  /*
-   * ============================================================
-   * ELEMENTS
-   * ============================================================
-   */
-
-  const statusEl =
-    document.getElementById("status");
-
-  const redirectUriEl =
-    document.getElementById("redirectUri");
-
-  const metaResponseEl =
-    document.getElementById("metaResponse");
-
-  const backendResponseEl =
-    document.getElementById("backendResponse");
-
-  const coexistenceResultEl =
-    document.getElementById("coexistenceResult");
+  /* =========================================================
+     ELEMENTS
+     ========================================================= */
 
   const connectBtn =
-    document.getElementById("connectBtn");
-
-
-  /*
-   * ============================================================
-   * STATUS
-   * ============================================================
-   */
-
-  function setStatus(message) {
-
-    statusEl.textContent = message;
-
-    console.log(
-      "[STATUS]",
-      message
+    document.getElementById(
+      "connectBtn"
     );
+
+  const statusEl =
+    document.getElementById(
+      "status"
+    );
+
+  const authOutput =
+    document.getElementById(
+      "authOutput"
+    );
+
+  const metaOutput =
+    document.getElementById(
+      "metaOutput"
+    );
+
+  const backendOutput =
+    document.getElementById(
+      "backendOutput"
+    );
+
+
+  /* =========================================================
+     HELPERS
+     ========================================================= */
+
+  function setStatus(text) {
+
+    statusEl.textContent =
+      text;
 
   }
 
 
-  /*
-   * ============================================================
-   * REDIRECT URI VALIDATOR
-   * ============================================================
-   */
+  function showAuth(data) {
 
-  function isValidRedirectUri(value) {
+    try {
 
-    if (
-      typeof value !== "string"
-    ) {
-      return false;
-    }
-
-    return (
-      value.includes(
-        "https://staticxx.facebook.com/x/connect/xd_arbiter/"
-      )
-    );
-
-  }
-
-
-  /*
-   * ============================================================
-   * FIND REDIRECT URI INSIDE ANY DATA
-   * ============================================================
-   *
-   * Fungsi ini sengaja dibuat recursive.
-   *
-   * Meta dapat mengirim data dalam:
-   *
-   * string
-   * object
-   * array
-   * nested object
-   * JSON string
-   * encoded string
-   */
-
-  function findRedirectUri(
-    value,
-    depth = 0
-  ) {
-
-    if (
-      depth > 10 ||
-      value === null ||
-      value === undefined
-    ) {
-      return null;
-    }
-
-
-    /*
-     * STRING
-     */
-
-    if (
-      typeof value === "string"
-    ) {
-
-      let text =
-        value;
-
-
-      /*
-       * Coba URL biasa.
-       */
-
-      const directMatch =
-        text.match(
-          /https:\/\/staticxx\.facebook\.com\/x\/connect\/xd_arbiter\/[^\s"'<>\\]+/i
-        );
-
-
-      if (directMatch) {
-
-        return cleanRedirectUri(
-          directMatch[0]
-        );
-
-      }
-
-
-      /*
-       * Coba decode URL.
-       */
-
-      try {
-
-        const decoded =
-          decodeURIComponent(text);
-
-        if (
-          decoded !== text
-        ) {
-
-          const decodedResult =
-            findRedirectUri(
-              decoded,
-              depth + 1
+      authOutput.textContent =
+        typeof data === "string"
+          ? data
+          : JSON.stringify(
+              data,
+              null,
+              2
             );
 
-          if (
-            decodedResult
-          ) {
-            return decodedResult;
-          }
+    } catch (error) {
 
-        }
-
-      } catch (e) {
-        // Ignore decoding errors.
-      }
-
-
-      /*
-       * Coba parse JSON.
-       */
-
-      try {
-
-        const parsed =
-          JSON.parse(text);
-
-        const parsedResult =
-          findRedirectUri(
-            parsed,
-            depth + 1
-          );
-
-        if (
-          parsedResult
-        ) {
-          return parsedResult;
-        }
-
-      } catch (e) {
-        // Bukan JSON.
-      }
-
-
-      return null;
+      authOutput.textContent =
+        String(data);
 
     }
 
-
-    /*
-     * OBJECT / ARRAY
-     */
-
-    if (
-      typeof value === "object"
-    ) {
-
-      /*
-       * Prioritaskan property yang kemungkinan
-       * langsung berisi redirect URI.
-       */
-
-      const priorityKeys = [
-        "redirect_uri",
-        "redirectUri",
-        "redirectURL",
-        "redirectUrl",
-        "url",
-        "href",
-        "location"
-      ];
+  }
 
 
-      for (
-        const key of priorityKeys
-      ) {
+  function showMeta(data) {
 
-        try {
+    try {
 
-          if (
-            value[key] !== undefined
-          ) {
-
-            const result =
-              findRedirectUri(
-                value[key],
-                depth + 1
-              );
-
-            if (
-              result
-            ) {
-              return result;
-            }
-
-          }
-
-        } catch (e) {
-          // Ignore.
-        }
-
-      }
-
-
-      /*
-       * Cari seluruh property lainnya.
-       */
-
-      try {
-
-        for (
-          const key of Object.keys(value)
-        ) {
-
-          if (
-            priorityKeys.includes(key)
-          ) {
-            continue;
-          }
-
-
-          const result =
-            findRedirectUri(
-              value[key],
-              depth + 1
+      metaOutput.textContent =
+        typeof data === "string"
+          ? data
+          : JSON.stringify(
+              data,
+              null,
+              2
             );
 
+    } catch (error) {
 
-          if (
-            result
-          ) {
-            return result;
-          }
-
-        }
-
-      } catch (e) {
-        // Ignore inaccessible objects.
-      }
+      metaOutput.textContent =
+        String(data);
 
     }
-
-
-    return null;
 
   }
 
 
-  /*
-   * ============================================================
-   * CLEAN REDIRECT URI
-   * ============================================================
-   */
+  function showBackend(data) {
 
-  function cleanRedirectUri(
-    uri
-  ) {
+    try {
 
-    if (
-      !uri
-    ) {
-      return null;
+      backendOutput.textContent =
+        typeof data === "string"
+          ? data
+          : JSON.stringify(
+              data,
+              null,
+              2
+            );
+
+    } catch (error) {
+
+      backendOutput.textContent =
+        String(data);
+
     }
-
-
-    let result =
-      String(uri);
-
-
-    /*
-     * Hapus karakter escaping.
-     */
-
-    result =
-      result.replace(
-        /\\u0026/g,
-        "&"
-      );
-
-
-    result =
-      result.replace(
-        /\\&/g,
-        "&"
-      );
-
-
-    result =
-      result.replace(
-        /&amp;/g,
-        "&"
-      );
-
-
-    /*
-     * Hapus quote / karakter akhir.
-     */
-
-    result =
-      result.replace(
-        /["'<>\s]+$/,
-        ""
-      );
-
-
-    /*
-     * Pastikan memang staticxx.
-     */
-
-    if (
-      !isValidRedirectUri(result)
-    ) {
-      return null;
-    }
-
-
-    return result;
 
   }
 
 
-  /*
-   * ============================================================
-   * SAVE REDIRECT URI
-   * ============================================================
-   */
+  /* =========================================================
+     FACEBOOK SDK
+     ========================================================= */
 
-  function saveRedirectUri(
-    uri,
-    source
-  ) {
+  window.fbAsyncInit =
+    function() {
 
-    const cleaned =
-      cleanRedirectUri(uri);
+      FB.init({
 
+        appId:
+          APP_ID,
 
-    if (
-      !cleaned
-    ) {
-      return false;
-    }
+        cookie:
+          true,
 
+        xfbml:
+          false,
 
-    capturedRedirectUri =
-      cleaned;
+        version:
+          "v26.0"
+
+      });
 
 
-    redirectUriEl.textContent =
-      cleaned;
+      console.log(
+        "Facebook SDK initialized."
+      );
+
+      console.log(
+        "APP_ID:",
+        APP_ID
+      );
+
+      console.log(
+        "CONFIG_ID:",
+        CONFIG_ID
+      );
 
 
-    console.log(
-      "CAPTURED REDIRECT URI:",
-      cleaned
-    );
+      connectBtn.disabled =
+        false;
 
 
-    console.log(
-      "REDIRECT URI SOURCE:",
-      source
-    );
+      setStatus(
+        "Facebook SDK siap. Klik Connect WhatsApp."
+      );
+
+    };
 
 
-    setStatus(
-      "Redirect URI Meta berhasil ditangkap."
-    );
+  /* =========================================================
+     FACEBOOK MESSAGE LISTENER
+     =========================================================
 
+     Hanya untuk DEBUG.
 
-    return true;
+     TIDAK digunakan untuk mengambil
+     redirect_uri atau authorization code.
 
-  }
-
-
-  /*
-   * ============================================================
-   * WINDOW MESSAGE LISTENER
-   * ============================================================
-   */
+     ========================================================= */
 
   window.addEventListener(
     "message",
     function(event) {
 
-      console.log(
-        "[META MESSAGE]",
-        {
-          origin:
-            event.origin,
-
-          data:
-            event.data
-        }
-      );
-
-
-      /*
-       * Cari URI dari data.
-       */
-
-      const found =
-        findRedirectUri(
-          event.data
-        );
-
-
       if (
-        found
+        !event.origin.endsWith(
+          "facebook.com"
+        )
       ) {
 
-        saveRedirectUri(
-          found,
-          "window.message"
-        );
+        return;
 
       }
 
-
-      /*
-       * Jika data tidak langsung berhasil,
-       * coba serialisasi seluruh object.
-       */
-
-      if (
-        !found
-      ) {
-
-        try {
-
-          const serialized =
-            JSON.stringify(
-              event.data
-            );
-
-
-          const serializedResult =
-            findRedirectUri(
-              serialized
-            );
-
-
-          if (
-            serializedResult
-          ) {
-
-            saveRedirectUri(
-              serializedResult,
-              "window.message.serialized"
-            );
-
-          }
-
-        } catch (e) {
-          // Ignore.
-        }
-
-      }
-
-
-      /*
-       * ========================================================
-       * COEXISTENCE EVENT
-       * ========================================================
-       */
 
       let data =
         event.data;
@@ -790,945 +359,396 @@ Belum ada hasil.
           data =
             JSON.parse(data);
 
-        } catch (e) {
-          // Ignore.
-        }
+        } catch (error) {
 
-      }
-
-
-      if (
-        data &&
-        data.type ===
-          "WA_EMBEDDED_SIGNUP"
-      ) {
-
-        console.log(
-          "WA_EMBEDDED_SIGNUP EVENT:",
-          data
-        );
-
-
-        if (
-          data.event ===
-          "FINISH_WHATSAPP_BUSINESS_APP_ONBOARDING"
-        ) {
-
-          setStatus(
-            "Coexistence onboarding selesai. Menunggu authorization code..."
-          );
+          // Bukan JSON.
+          // Jangan diproses sebagai OAuth code.
 
         }
 
       }
 
-    },
-    false
+
+      console.log(
+        "Facebook message:",
+        data
+      );
+
+    }
   );
 
 
-  /*
-   * ============================================================
-   * POPUP CAPTURE
-   * ============================================================
-   *
-   * Meta SDK biasanya membuka dialog melalui window.open.
-   *
-   * Kita tidak mengubah popup.
-   * Kita hanya mencoba mencatat URL awalnya jika browser
-   * memberikannya.
-   */
+  /* =========================================================
+     CONNECT WHATSAPP
+     ========================================================= */
 
-  const originalWindowOpen =
-    window.open;
-
-
-  window.open =
-    function(
-      url,
-      target,
-      features
-    ) {
-
-      console.log(
-        "[WINDOW.OPEN]",
-        url
-      );
-
-
-      const found =
-        findRedirectUri(
-          url
-        );
-
-
-      if (
-        found
-      ) {
-
-        saveRedirectUri(
-          found,
-          "window.open"
-        );
-
-      }
-
-
-      return originalWindowOpen.call(
-        window,
-        url,
-        target,
-        features
-      );
-
-    };
-
-
-  /*
-   * ============================================================
-   * PERIODIC REDIRECT CAPTURE
-   * ============================================================
-   *
-   * Selama login berlangsung, kita mencoba beberapa sumber
-   * browser yang aman.
-   */
-
-  function inspectCurrentBrowserState() {
-
-    if (
-      capturedRedirectUri
-    ) {
-      return;
-    }
-
-
-    /*
-     * Current page URL.
-     */
-
-    const currentUrl =
-      window.location.href;
-
-
-    const currentResult =
-      findRedirectUri(
-        currentUrl
-      );
-
-
-    if (
-      currentResult
-    ) {
-
-      saveRedirectUri(
-        currentResult,
-        "window.location"
-      );
-
-      return;
-
-    }
-
-
-    /*
-     * Performance entries.
-     *
-     * Kadang URL popup/frame dapat muncul sebagai resource
-     * entry walaupun tidak bisa diakses langsung.
-     */
-
-    try {
-
-      const entries =
-        performance.getEntriesByType(
-          "resource"
-        );
-
-
-      for (
-        const entry of entries
-      ) {
-
-        const found =
-          findRedirectUri(
-            entry.name
-          );
-
-
-        if (
-          found
-        ) {
-
-          saveRedirectUri(
-            found,
-            "performance.resource"
-          );
-
-          return;
-
-        }
-
-      }
-
-    } catch (e) {
-      // Ignore.
-    }
-
-  }
-
-
-  let redirectScanner = null;
-
-
-  function startRedirectScanner() {
-
-    if (
-      redirectScanner
-    ) {
-      clearInterval(
-        redirectScanner
-      );
-    }
-
-
-    redirectScanner =
-      setInterval(
-        function() {
-
-          inspectCurrentBrowserState();
-
-
-          /*
-           * Jika sudah ditemukan, scanner tidak
-           * perlu terus berjalan.
-           */
-
-          if (
-            capturedRedirectUri
-          ) {
-
-            clearInterval(
-              redirectScanner
-            );
-
-            redirectScanner =
-              null;
-
-          }
-
-        },
-        300
-      );
-
-  }
-
-
-  /*
-   * ============================================================
-   * FACEBOOK SDK
-   * ============================================================
-   */
-
-  window.fbAsyncInit =
+  connectBtn.addEventListener(
+    "click",
     function() {
 
-      FB.init({
-
-        appId:
-          APP_ID,
-
-        cookie:
-          true,
-
-        xfbml:
-          true,
-
-        version:
-          "v26.0"
-
-      });
-
-
-      facebookInitialized =
-        true;
-
-
-      console.log(
-        "Facebook SDK initialized."
-      );
-
-
-      console.log(
-        "APP ID:",
-        APP_ID
-      );
-
-
-      console.log(
-        "CONFIG_ID:",
-        CONFIG_ID
-      );
-
-
       setStatus(
-        "Facebook SDK siap. Klik Connect WhatsApp."
+        "Membuka Embedded Signup..."
       );
 
-    };
 
-
-  /*
-   * ============================================================
-   * CONNECT WHATSAPP
-   * ============================================================
-   */
-
-  function connectWhatsApp() {
-
-    if (
-      loginInProgress
-    ) {
-
-      console.warn(
-        "Login masih berjalan."
+      showAuth(
+        "Menunggu respons Meta..."
       );
 
-      return;
 
-    }
-
-
-    if (
-      !facebookInitialized
-    ) {
-
-      setStatus(
-        "Facebook SDK belum siap. Tunggu beberapa detik lalu coba lagi."
+      showMeta(
+        "Menunggu respons Meta..."
       );
 
-      return;
 
-    }
-
-
-    /*
-     * RESET
-     */
-
-    loginInProgress =
-      true;
-
-    authorizationCode =
-      null;
-
-    capturedRedirectUri =
-      null;
+      showBackend(
+        "Belum ada request ke backend."
+      );
 
 
-    connectBtn.disabled =
-      true;
+      console.log(
+        "Starting WhatsApp Embedded Signup..."
+      );
 
 
-    redirectUriEl.textContent =
-      "Menunggu redirect URI Meta...";
+      /* =====================================================
+         FB.LOGIN
 
+         PENTING:
 
-    metaResponseEl.textContent =
-      "Menunggu respons Meta...";
+         Tidak ada lagi:
+         - window.open interception
+         - redirect_uri capture
+         - staticxx.facebook.com
+         - xd_arbiter parsing
+         ===================================================== */
 
+      FB.login(
 
-    backendResponseEl.textContent =
-      "Belum ada request ke backend.";
+        function(response) {
 
-
-    coexistenceResultEl.textContent =
-      "Menunggu hasil Coexistence...";
-
-
-    setStatus(
-      "Membuka Embedded Signup Coexistence..."
-    );
-
-
-    /*
-     * START REDIRECT SCANNER
-     */
-
-    startRedirectScanner();
-
-
-    /*
-     * ==========================================================
-     * META LOGIN
-     * ==========================================================
-     */
-
-    FB.login(
-      function(response) {
-
-        console.log(
-          "Meta login response:",
-          response
-        );
-
-
-        /*
-         * Tampilkan response Meta.
-         */
-
-        metaResponseEl.textContent =
-          JSON.stringify(
-            response,
-            null,
-            2
+          console.log(
+            "Meta login response:",
+            response
           );
 
 
-        /*
-         * ======================================================
-         * AUTH ERROR / CANCEL
-         * ======================================================
-         */
-
-        if (
-          !response ||
-          !response.authResponse
-        ) {
-
-          setStatus(
-            "Meta Login tidak menghasilkan authorization code."
+          showMeta(
+            response
           );
 
 
-          loginInProgress =
-            false;
-
-
-          connectBtn.disabled =
-            false;
-
+          /* =================================================
+             AUTH RESPONSE CHECK
+             ================================================= */
 
           if (
-            redirectScanner
+            !response ||
+            !response.authResponse
           ) {
 
-            clearInterval(
-              redirectScanner
+            setStatus(
+              "Embedded Signup dibatalkan atau Meta tidak memberikan authorization response."
             );
-
-            redirectScanner =
-              null;
-
-          }
-
-
-          return;
-
-        }
-
-
-        /*
-         * ======================================================
-         * GET AUTH CODE
-         * ======================================================
-         */
-
-        authorizationCode =
-          response.authResponse.code;
-
-
-        if (
-          !authorizationCode
-        ) {
-
-          setStatus(
-            "Authorization code tidak ditemukan."
-          );
-
-
-          loginInProgress =
-            false;
-
-
-          connectBtn.disabled =
-            false;
-
-
-          return;
-
-        }
-
-
-        console.log(
-          "Authorization code diterima."
-        );
-
-
-        setStatus(
-          "BERHASIL: Authorization code diterima dari Meta. Mencari redirect URI..."
-        );
-
-
-        /*
-         * ======================================================
-         * WAIT FOR REDIRECT URI
-         * ======================================================
-         *
-         * Kita tidak langsung mengirim ke backend.
-         *
-         * Beri waktu agar postMessage / popup / resource
-         * scanner menangkap redirect_uri.
-         */
-
-        waitForRedirectUriAndSend();
-
-      },
-
-
-      {
-        /*
-         * ======================================================
-         * EMBEDDED SIGNUP
-         * ======================================================
-         */
-
-        config_id:
-          CONFIG_ID,
-
-        response_type:
-          "code",
-
-        override_default_response_type:
-          true,
-
-        extras: {
-
-          setup: {},
-
-          /*
-           * INI ADALAH COEXISTENCE MODE
-           */
-
-          featureType:
-            "whatsapp_business_app_onboarding",
-
-          sessionInfoVersion:
-            "3"
-
-        }
-
-      }
-
-    );
-
-  }
-
-
-  /*
-   * ============================================================
-   * WAIT FOR REDIRECT URI
-   * ============================================================
-   */
-
-  function waitForRedirectUriAndSend() {
-
-    const start =
-      Date.now();
-
-
-    const timeout =
-      10000;
-
-
-    const checker =
-      setInterval(
-        function() {
-
-          /*
-           * Sudah dapat.
-           */
-
-          if (
-            capturedRedirectUri
-          ) {
-
-            clearInterval(
-              checker
-            );
-
-
-            if (
-              redirectScanner
-            ) {
-
-              clearInterval(
-                redirectScanner
-              );
-
-              redirectScanner =
-                null;
-
-            }
-
-
-            sendCodeToBackend();
 
             return;
 
           }
 
 
-          /*
-           * Coba inspect lagi.
-           */
-
-          inspectCurrentBrowserState();
+          const authResponse =
+            response.authResponse;
 
 
-          /*
-           * Timeout.
-           */
+          /* =================================================
+             DETECT AUTH TYPE
+             ================================================= */
 
-          if (
-            Date.now() -
-              start >
-            timeout
-          ) {
+          const accessToken =
+            authResponse.accessToken ||
+            null;
 
-            clearInterval(
-              checker
-            );
+          const code =
+            authResponse.code ||
+            null;
 
 
-            if (
-              redirectScanner
-            ) {
+          showAuth({
 
-              clearInterval(
-                redirectScanner
-              );
+            has_access_token:
+              Boolean(accessToken),
 
-              redirectScanner =
-                null;
+            has_code:
+              Boolean(code),
 
-            }
+            token_type:
+              authResponse.accessToken
+                ? "access_token"
+                : null,
+
+            code_type:
+              authResponse.code
+                ? "authorization_code"
+                : null
+
+          });
 
 
-            /*
-             * JANGAN kirim null ke backend.
-             */
+          /* =================================================
+             CASE 1
+             ACCESS TOKEN
+
+             Untuk flow Login for Business /
+             Embedded Signup tertentu, Meta dapat
+             mengembalikan accessToken langsung.
+
+             Token dikirim HTTPS ke backend.
+             Backend tidak mengembalikannya lagi.
+             ================================================= */
+
+          if (accessToken) {
 
             setStatus(
-              "Authorization code sudah diterima, tetapi redirect URI Meta belum berhasil ditangkap. Backend tidak dipanggil agar tidak menghasilkan HTTP 400."
+              "Access token diterima dari Meta. Mengirim ke backend..."
             );
 
 
-            redirectUriEl.textContent =
-              "BELUM TERTANGKAP";
+            sendToBackend({
+
+              access_token:
+                accessToken
+
+            });
 
 
-            console.error(
-              "Authorization code ada, tetapi redirect_uri belum ditemukan."
-            );
-
-
-            loginInProgress =
-              false;
-
-
-            connectBtn.disabled =
-              false;
+            return;
 
           }
 
+
+          /* =================================================
+             CASE 2
+             AUTHORIZATION CODE
+
+             Jika Meta memberikan code,
+             backend akan mencoba melakukan
+             token exchange.
+
+             Tidak ada redirect_uri hasil
+             window.open yang digunakan.
+             ================================================= */
+
+          if (code) {
+
+            setStatus(
+              "Authorization code diterima. Mengirim ke backend..."
+            );
+
+
+            sendToBackend({
+
+              code:
+                code
+
+            });
+
+
+            return;
+
+          }
+
+
+          /* =================================================
+             NO TOKEN / NO CODE
+             ================================================= */
+
+          setStatus(
+            "Meta tidak mengembalikan access token maupun authorization code."
+          );
+
+
         },
-        200
+
+
+        /* =====================================================
+           FB.LOGIN OPTIONS
+           ===================================================== */
+
+        {
+
+          config_id:
+            CONFIG_ID,
+
+          response_type:
+            "code",
+
+          override_default_response_type:
+            true,
+
+          extras: {
+
+            setup:
+              {},
+
+            featureType:
+              "whatsapp_business_app_onboarding",
+
+            sessionInfoVersion:
+              "3"
+
+          }
+
+        }
+
       );
-
-  }
-
-
-  /*
-   * ============================================================
-   * SEND TO BACKEND
-   * ============================================================
-   */
-
-  async function sendCodeToBackend() {
-
-    /*
-     * SAFETY CHECK
-     */
-
-    if (
-      !authorizationCode
-    ) {
-
-      setStatus(
-        "Authorization code tidak tersedia."
-      );
-
-      return;
 
     }
+  );
 
 
-    if (
-      !capturedRedirectUri
-    ) {
+  /* =========================================================
+     SEND TO BACKEND
+     ========================================================= */
 
-      setStatus(
-        "Redirect URI belum tersedia. Request backend dibatalkan."
-      );
-
-      return;
-
-    }
-
-
-    /*
-     * ==========================================================
-     * PAYLOAD
-     * ==========================================================
-     */
-
-    const payload = {
-
-      code:
-        authorizationCode,
-
-      redirect_uri:
-        capturedRedirectUri
-
-    };
-
-
-    console.log(
-      "FINAL PAYLOAD BACKEND:",
-      {
-        hasCode:
-          !!authorizationCode,
-
-        redirect_uri:
-          capturedRedirectUri
-      }
-    );
-
-
-    setStatus(
-      "Authorization code dan redirect URI sudah tersedia. Mengirim ke backend..."
-    );
-
+  async function sendToBackend(
+    payload
+  ) {
 
     try {
 
-      const response =
+      console.log(
+        "Sending authentication payload to backend."
+      );
+
+
+      const backendResponse =
         await fetch(
           BACKEND_URL,
           {
+
             method:
               "POST",
 
             headers: {
+
               "Content-Type":
                 "application/json"
+
             },
 
             body:
               JSON.stringify(
                 payload
               )
+
           }
         );
 
 
-      const text =
-        await response.text();
+      const backendText =
+        await backendResponse.text();
 
 
-      let result;
+      let backendData;
 
 
       try {
 
-        result =
-          JSON.parse(text);
+        backendData =
+          JSON.parse(
+            backendText
+          );
 
-      } catch (e) {
+      } catch (error) {
 
-        result = {
+        backendData = {
+
+          success:
+            false,
+
+          error:
+            "Backend tidak mengembalikan JSON.",
+
           raw:
-            text
+            backendText
+
         };
 
       }
 
 
-      /*
-       * SHOW BACKEND RESPONSE
-       */
-
-      backendResponseEl.textContent =
-        JSON.stringify(
-          result,
-          null,
-          2
-        );
-
-
       console.log(
         "Backend response:",
-        result
+        backendData
       );
 
 
-      /*
-       * ========================================================
-       * BACKEND ERROR
-       * ========================================================
-       */
+      showBackend(
+        backendData
+      );
+
+
+      /* =====================================================
+         RESULT
+         ===================================================== */
 
       if (
-        !response.ok
+        backendResponse.ok &&
+        backendData.success
       ) {
 
         setStatus(
-          "BACKEND ERROR: HTTP " +
-          response.status
+          "BERHASIL: WhatsApp Embedded Signup berhasil diproses oleh backend."
         );
-
-        return;
-
-      }
-
-
-      /*
-       * ========================================================
-       * SUCCESS
-       * ========================================================
-       */
-
-      if (
-        result &&
-        result.success === true
-      ) {
-
-        setStatus(
-          "BERHASIL: Authorization code berhasil ditukar oleh Meta."
-        );
-
-
-        /*
-         * PHONE STATUS
-         */
-
-        if (
-          result.phone_status
-        ) {
-
-          coexistenceResultEl.textContent =
-            JSON.stringify(
-              result.phone_status,
-              null,
-              2
-            );
-
-
-          const phoneStatus =
-            result.phone_status[0];
-
-
-          if (
-            phoneStatus &&
-            phoneStatus.coexistence &&
-            phoneStatus.coexistence.ready === true
-          ) {
-
-            setStatus(
-              "BERHASIL: Nomor sudah terhubung melalui WhatsApp Coexistence."
-            );
-
-          } else {
-
-            console.log(
-              "Phone status:",
-              phoneStatus
-            );
-
-          }
-
-        }
-
 
       } else {
 
         setStatus(
-          "Backend memberikan response tetapi success=false."
+          "Backend menerima request tetapi Meta masih mengembalikan error. Lihat Respons Backend."
         );
 
       }
 
+
     } catch (error) {
 
       console.error(
-        "Backend request error:",
+        "Backend error:",
         error
       );
 
 
-      backendResponseEl.textContent =
-        JSON.stringify(
-          {
-            error:
-              error.message
-          },
-          null,
-          2
-        );
-
-
       setStatus(
-        "ERROR: Gagal menghubungi backend."
+        "Gagal menghubungi backend."
       );
 
-    } finally {
 
-      loginInProgress =
-        false;
+      showBackend({
 
-      connectBtn.disabled =
-        false;
+        success:
+          false,
+
+        error:
+          error.message
+
+      });
 
     }
 
   }
 
+</script>
 
-  /*
-   * ============================================================
-   * INITIAL DEBUG
-   * ============================================================
-   */
 
-  console.log(
-    "WhatsApp Coexistence Test loaded."
-  );
+<!-- =========================================================
+     FACEBOOK JAVASCRIPT SDK
+     ========================================================= -->
 
-  console.log(
-    "APP_ID:",
-    APP_ID
-  );
-
-  console.log(
-    "CONFIG_ID:",
-    CONFIG_ID
-  );
-
-  console.log(
-    "BACKEND_URL:",
-    BACKEND_URL
-  );
-
+<script
+  async
+  defer
+  crossorigin="anonymous"
+  src="https://connect.facebook.net/en_US/sdk.js">
 </script>
 
 </body>

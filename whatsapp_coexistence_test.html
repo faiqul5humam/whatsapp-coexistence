@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Coexistence Test</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;line-height:1.5}
+.card{border:1px solid #ddd;border-radius:12px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+button{background:#1877f2;color:#fff;border:0;border-radius:6px;padding:12px 18px;font-size:15px;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+code{background:#f4f4f4;padding:2px 5px;border-radius:4px}
+pre{background:#111;color:#eee;padding:14px;border-radius:8px;overflow:auto;white-space:pre-wrap}
+.warning{background:#fff7e6;border:1px solid #ffd591;padding:12px;border-radius:8px;margin:16px 0}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>WhatsApp Coexistence Test</h1>
+<p><strong>App:</strong> Indosat Corporate Collection</p>
+<p><strong>App ID:</strong> <code>1089590593724613</code></p>
+<p><strong>Configuration ID:</strong> <code>866712459710524</code></p>
+
+<div class="warning">
+<strong>Penting:</strong> halaman ini hanya membuka Embedded Signup.
+Jangan memasukkan atau memigrasikan nomor WhatsApp sebelum memastikan
+layar Meta menunjukkan alur WhatsApp Business App / Coexistence yang benar.
+</div>
+
+<button id="connectBtn" disabled>Connect WhatsApp</button>
+
+<h3>Status</h3>
+<pre id="status">Memuat Facebook SDK...</pre>
+<h3>Respons</h3>
+<pre id="output">Belum ada respons.</pre>
+</div>
+
+<div id="fb-root"></div>
+<script>
+const APP_ID = "1089590593724613";
+const CONFIG_ID = "866712459710524";
+
+function status(text){document.getElementById("status").textContent=text;}
+function output(data){
+  try{document.getElementById("output").textContent=
+    typeof data==="string"?data:JSON.stringify(data,null,2);}
+  catch(e){document.getElementById("output").textContent=String(data);}
+}
+
+window.fbAsyncInit=function(){
+  FB.init({
+    appId: APP_ID,
+    cookie: true,
+    xfbml: false,
+    version: "v26.0"
+  });
+  document.getElementById("connectBtn").disabled=false;
+  status("Facebook SDK siap. Klik Connect WhatsApp.");
+};
+
+window.addEventListener("message",function(event){
+  if(!event.origin.endsWith("facebook.com")) return;
+  let data=event.data;
+  if(typeof data==="string"){
+    try{data=JSON.parse(data)}catch(e){}
+  }
+  output(data);
+});
+
+document.getElementById("connectBtn").addEventListener("click",function(){
+  status("Membuka Embedded Signup...");
+  FB.login(function(response){
+    output(response);
+    if(response && response.authResponse){
+      status("Embedded Signup mengembalikan respons. Berhenti dan cek hasilnya sebelum melakukan migrasi nomor.");
+    }else{
+      status("Embedded Signup dibatalkan atau belum memberikan respons.");
+    }
+  },{
+    config_id: CONFIG_ID,
+    response_type: "code",
+    override_default_response_type: true,
+    extras:{
+      feature: "whatsapp_business_app_onboarding",
+      version: 2,
+      sessionInfoVersion: 3
+    }
+  });
+});
+</script>
+<script async defer crossorigin="anonymous"
+src="https://connect.facebook.net/en_US/sdk.js"></script>
+</body>
+</html>
